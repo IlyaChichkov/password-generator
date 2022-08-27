@@ -53,6 +53,7 @@ button:active > svg{
     outline: none; /* Remove outline */
     -webkit-transition: .2s; /* 0.2 seconds transition on hover */
     transition: opacity .2s;
+    overflow: hidden;
     @apply bg-dark-gray-400 h-[10px] rounded-full;
 }
 
@@ -64,12 +65,13 @@ button:active > svg{
 /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none; /* Override default look */
-    @apply bg-white cursor-default w-[24px] h-[24px] relative rounded-full;
+    @apply bg-transparent cursor-default w-[24px] h-[24px] relative rounded-full;
+    box-shadow: -410px 0px 0px 400px #A4FFAF;
 }
 
 .slider::-moz-range-thumb {
     -webkit-appearance: none; /* Override default look */
-    @apply bg-white cursor-default w-[24px] h-[24px] rounded-full border-solid border-4;
+    @apply bg-transparent cursor-default w-[24px] h-[24px] rounded-full border-solid border-4;
     box-shadow: -400px 0 0 400px #A4FFAF;
 }
 
@@ -79,4 +81,24 @@ button:active > svg{
     @apply bg-white;
 }
 
+.slider-thumb-m[type='range']{
+    transition: opacity .2s;
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    @apply absolute left-0 top-0 right-0 bottom-0 bg-transparent;
+    background-color: transparent;
+}
 
+/* Mouse-over effects */
+.slider-thumb-m:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+.slider-thumb-m::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    @apply bg-white cursor-default w-[25px] h-[25px] relative rounded-full border-solid border-2 border-white;
+}
+
+.slider-thumb-m::-moz-range-thumb {
+    -webkit-appearance: none; /* Override default look */
+    @apply bg-white cursor-default w-[25px] h-[25px] rounded-full border-solid border-2 border-white;
+}

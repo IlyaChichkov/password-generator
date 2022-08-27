@@ -32,38 +32,36 @@
         <!-- Password length info -->
         <div class="flex flex-row justify-between items-center">
           <p class="text-sm">Character length</p>
-          <p class="text-light-green text-3xl font-bold">0</p>
+          <p class="text-light-green text-3xl font-bold">{{passwordLength}}</p>
         </div>
         <!-- Password length slider -->
-        <div class="slider-container">
-          <input class="slider w-full" type="range" value="0">
-          <n-space vertical>
-            <n-slider v-model:value="passwordLength" :step="1"/>
-          </n-space>
+        <div class="slider-container relative">
+          <input class="slider w-full" type="range" v-model="passwordLength" min="0" max="20" step="1">
+          <input class="slider-thumb-m" type="range" v-model="passwordLength" min="0" max="20" step="1">
         </div>
         <!-- Password components checkboxes -->
         <div class="pw-settings-checkbox">
           <div class="checkbox-input-container">
             <label class="checkbox-input">
-              <input type="checkbox" :checked="addUpperLetters">
+              <input v-model="addUpperLetters" type="checkbox" :checked="addUpperLetters">
               <span>Include Uppercase Letters</span>
             </label>
           </div>
           <div class="checkbox-input-container">
             <label class="checkbox-input">
-              <input class="" type="checkbox" :checked="addLowerLetters">
+              <input v-model="addLowerLetters" class="" type="checkbox" :checked="addLowerLetters">
               <span>Include Lowercase Letters</span>
             </label>
           </div>
           <div class="checkbox-input-container">
             <label class="checkbox-input">
-              <input class="" type="checkbox" :checked="addNumbers">
+              <input v-model="addNumbers" class="" type="checkbox" :checked="addNumbers">
               <span>Include Numbers</span>
             </label>
           </div>
           <div class="checkbox-input-container">
             <label class="checkbox-input">
-              <input class="" type="checkbox" :checked="addSymbols">
+              <input v-model="addSymbols" class="" type="checkbox" :checked="addSymbols">
               <span>Include Symbols</span>
             </label>
           </div>
@@ -81,7 +79,7 @@
         </div>
         <!-- Generate password button -->
         <div class="flex flex-col justify-center ">
-          <button class="generate-btn">
+          <button v-on:click.prevent="generate" class="generate-btn">
             <p class="text-dark-gray-400 font-bold mr-3">Generate</p>
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M10.8225 4.44751L15.375 9.00001L10.8225 13.5525" stroke="#18171F" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
@@ -103,6 +101,7 @@ import {defineComponent} from "vue";
 import './PasswordGenerator.scss'
 import './Modal.scss'
 import CopiedModal from "@/components/CopiedModule.vue";
+import {generatePassword, PasswordSettings} from "@/passwordGenerator";
 
 export default defineComponent({
   name: 'PasswordGenerator',
@@ -122,12 +121,15 @@ export default defineComponent({
     showCopyModal: function (){
       navigator.clipboard.writeText(this.password);
       this.copyModal = !this.copyModal;
-    }
-  },
-  computed: {
-    getSliderWidth: function () {
-
-      return 200 + 'px';
+    },
+    generate: function () {
+      const settings = new PasswordSettings();
+      settings.length = this.passwordLength;
+      settings.uppercase = this.addUpperLetters;
+      settings.lowercase = this.addLowerLetters;
+      settings.numbers = this.addNumbers;
+      settings.symbols = this.addSymbols;
+      this.password = generatePassword(settings);
     }
   }
 })
