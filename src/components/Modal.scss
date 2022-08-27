@@ -1,0 +1,7 @@
+
+.copy-modal-bar-enter-active, .copy-modal-bar-leave-active {
+  transition: opacity .8s ease-in;
+}
+.copy-modal-bar-leave-to, .copy-modal-bar-enter{
+  @apply opacity-0;
+}

@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap');
+
+body{
+    @apply font-sans text-white text-lg;
+    @apply bg-gradient-to-b from-gd-light to-gd-dark
+    h-screen;
+}
+
+h1, h2, h3 {
+
+}
+
+p, label{
+
+}
+
+#app {
+    @apply h-full flex flex-row items-center justify-center;
+}
+
+input[type='range']{
+    @apply bg-dark-gray-500;
+}
+
+button{
+    @apply bg-light-green rounded;
+    transition: background-color .3s  cubic-bezier(.54,.82,.61,.97);
+}
+
+button:hover{
+    @apply bg-green-200;
+}
+
+button:active{
+    @apply bg-white;
+}
+button:active > p{
+    @apply opacity-90;
+}
+button:active > svg{
+    @apply opacity-90;
+}
+
+
+/* The slider itself */
+.slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    outline: none; /* Remove outline */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+    @apply bg-dark-gray-400 rounded-full;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    @apply bg-white cursor-default w-[24px] h-[24px] relative rounded-full;
+}
+
+.slider::-moz-range-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    @apply bg-white cursor-default w-[24px] h-[24px] rounded-full;
+}
+
+.slider::-moz-range-progress {
+    -webkit-appearance: none;
+    appearance: none;
+    @apply bg-white;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 50%; /* Full-width */
+    outline: none;
+
+    @apply  rounded-full;
+}
+input[type=range]::-moz-range-track {
+    @apply bg-white;
+}
+input[type=range]::-ms-track {
+    @apply bg-white;
+}
