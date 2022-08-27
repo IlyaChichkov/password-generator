@@ -10,6 +10,7 @@
   "dependencies": {
     "core-js": "^3.8.3",
     "vue": "^3.2.13",
+    "vue-slider-component": "^4.1.0-beta.2",
     "vuex": "^4.0.0"
   },
   "devDependencies": {
@@ -24,6 +25,7 @@
     "autoprefixer": "^10.4.8",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
+    "naive-ui": "^2.32.2",
     "postcss": "^8.4.16",
     "sass": "^1.32.7",
     "sass-loader": "^12.0.0",

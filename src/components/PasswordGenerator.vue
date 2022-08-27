@@ -35,9 +35,11 @@
           <p class="text-light-green text-3xl font-bold">0</p>
         </div>
         <!-- Password length slider -->
-        <div class="w-full my-4">
+        <div class="slider-container">
           <input class="slider w-full" type="range" value="0">
-          <CustomSlider/>
+          <n-space vertical>
+            <n-slider v-model:value="passwordLength" :step="1"/>
+          </n-space>
         </div>
         <!-- Password components checkboxes -->
         <div class="pw-settings-checkbox">
@@ -92,7 +94,7 @@
   </div>
 
   <transition name="copy-modal-bar">
-    <CopiedModule v-if="copyModal" :set-module-visible="true" @closed="copyModal = false"/>
+    <CopiedModal v-if="copyModal" :set-module-visible="true" @closed="copyModal = false"/>
   </transition>
 </template>
 
@@ -100,12 +102,11 @@
 import {defineComponent} from "vue";
 import './PasswordGenerator.scss'
 import './Modal.scss'
-import CopiedModule from "@/components/CopiedModule.vue";
-import CustomSlider from "@/components/CustomSlider.vue";
+import CopiedModal from "@/components/CopiedModule.vue";
 
 export default defineComponent({
   name: 'PasswordGenerator',
-  components: {CustomSlider, CopiedModule},
+  components: {CopiedModal},
   data() {
     return {
       password: 'Y3@fR5$r',
@@ -121,6 +122,12 @@ export default defineComponent({
     showCopyModal: function (){
       navigator.clipboard.writeText(this.password);
       this.copyModal = !this.copyModal;
+    }
+  },
+  computed: {
+    getSliderWidth: function () {
+
+      return 200 + 'px';
     }
   }
 })

@@ -10,7 +10,7 @@
 
 
 export default {
-  name: "CopiedModule",
+  name: "CopiedModal",
   props: {
     setModuleVisible: { type: Boolean, default: true }
   },

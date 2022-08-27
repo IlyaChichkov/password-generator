@@ -53,7 +53,7 @@ button:active > svg{
     outline: none; /* Remove outline */
     -webkit-transition: .2s; /* 0.2 seconds transition on hover */
     transition: opacity .2s;
-    @apply bg-dark-gray-400 rounded-full;
+    @apply bg-dark-gray-400 h-[10px] rounded-full;
 }
 
 /* Mouse-over effects */
@@ -64,14 +64,13 @@ button:active > svg{
 /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none; /* Override default look */
-    appearance: none;
     @apply bg-white cursor-default w-[24px] h-[24px] relative rounded-full;
 }
 
 .slider::-moz-range-thumb {
     -webkit-appearance: none; /* Override default look */
-    appearance: none;
-    @apply bg-white cursor-default w-[24px] h-[24px] rounded-full;
+    @apply bg-white cursor-default w-[24px] h-[24px] rounded-full border-solid border-4;
+    box-shadow: -400px 0 0 400px #A4FFAF;
 }
 
 .slider::-moz-range-progress {
@@ -80,17 +79,4 @@ button:active > svg{
     @apply bg-white;
 }
 
-input[type=range]::-webkit-slider-runnable-track {
-    -webkit-appearance: none;  /* Override default CSS styles */
-    appearance: none;
-    width: 50%; /* Full-width */
-    outline: none;
 
-    @apply  rounded-full;
-}
-input[type=range]::-moz-range-track {
-    @apply bg-white;
-}
-input[type=range]::-ms-track {
-    @apply bg-white;
-}
