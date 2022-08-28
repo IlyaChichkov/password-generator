@@ -20,7 +20,7 @@ function RandomRange(min: number, max: number){
 
 function generatePassword(settings: PasswordSettings) {
     let typesCount = 0;
-
+    // First count how many letter types we have
     if(settings.uppercase){
         typesCount++;
     }
@@ -37,7 +37,7 @@ function generatePassword(settings: PasswordSettings) {
     const letterTypes = [];
     const letterPerType = Math.floor(settings.length / typesCount);
     const additionalLettersCount = settings.length - letterPerType * typesCount;
-
+    // Create array of letter types and their length inside password
     if(settings.uppercase){
         letterTypes.push({
             typeChars: upperLetters,
@@ -62,8 +62,7 @@ function generatePassword(settings: PasswordSettings) {
             lettersCount: letterPerType
         })
     }
-    console.log(letterTypes)
-    console.log(additionalLettersCount)
+    // Fill password with different types of char
     let password = '';
     for (const letterType of letterTypes) {
         for (let i = 0; i < letterType.lettersCount; i++) {
@@ -71,7 +70,7 @@ function generatePassword(settings: PasswordSettings) {
             password += letterType.typeChars.charAt(charId);
         }
     }
-    console.log(password)
+    // If some space for letters left, add more random chars
     for (let i = 0; i < additionalLettersCount; i++) {
         console.log('adding')
         console.log(letterTypes)
@@ -89,10 +88,10 @@ function generatePassword(settings: PasswordSettings) {
 
 // 3-d Party Shuffle Function
 function shuffleString(string: string) {
-// Create a copy of the original string to be randomized ['A', 'B', ... , 'G']
+    // Create a copy of the original string to be randomized ['A', 'B', ... , 'G']
     const shuffle = [...string];
 
-// Shuffle a pair of two elements at random position j (Fisher-Yates)
+    // Shuffle a pair of two elements at random position j (Fisher-Yates)
     shuffle.forEach( (elem, i, arr, j = RandomRange(i, arr.length)) => [arr[i], arr[j]] = [arr[j], arr[i]] );
 
     return shuffle.join('');
