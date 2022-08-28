@@ -6,8 +6,8 @@
     <!-- Password output with copy icon -->
     <section class="generator-section">
       <div class="flex flex-row justify-between">
-        <p class="text-gray">{{password}}</p>
-        <div v-on:click.prevent="showCopyModal" class="copy-icon">
+        <p :class="[passwordCreated? 'text-white':'text-gray','overflow-x-clip']">{{password}}</p>
+        <div v-on:click.prevent="showCopyModal" class="copy-icon pl-2">
           <svg  width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="#A4FFAF" xmlns="http://www.w3.org/2000/svg">
             <path
                 d="M19.8333 15.6333V19.1333C19.8333 23.8 17.9667 25.6667 13.3 25.6667H8.86666C4.19999 25.6667 2.33333 23.8 2.33333 19.1333V14.7C2.33333 10.0333 4.19999 8.16666 8.86666 8.16666H12.3667"
@@ -36,8 +36,8 @@
         </div>
         <!-- Password length slider -->
         <div class="slider-container relative">
-          <input class="slider w-full" type="range" v-model="passwordLength" min="0" max="20" step="1">
-          <input class="slider-thumb-m" type="range" v-model="passwordLength" min="0" max="20" step="1">
+          <input class="slider w-full" type="range" v-model="passwordLength" min="4" max="40" step="1">
+          <input class="slider-thumb-m" type="range" v-model="passwordLength" min="4" max="40" step="1">
         </div>
         <!-- Password components checkboxes -->
         <div class="pw-settings-checkbox">
@@ -70,10 +70,12 @@
         <div class="flex flex-row justify-between rounded bg-dark-gray-500 py-3 my-4">
           <p class="text-gray ml-3 uppercase">Strength</p>
           <div class="flex flex-row">
-            <p class="mr-2 uppercase">None</p>
+            <p class="mr-3 uppercase">{{ passwordDifficulty }}</p>
             <!-- Password strength indicators -->
-            <div class="flex flex-row justify-between mr-3">
-              <div class="str-indicator mr-1 last:mr-0" v-for="n in 4" v-bind:key="n"></div>
+            <div class="flex flex-row justify-between mr-3 diff-ind-container">
+              <div :class="[n <= passwordScore? 'str-indicator-filled': 'str-indicator','diff-ind-item']" v-for="n in 4" v-bind:key="n">
+                <div ></div>
+              </div>
             </div>
           </div>
         </div>
@@ -103,18 +105,31 @@ import './Modal.scss'
 import CopiedModal from "@/components/CopiedModule.vue";
 import {generatePassword, PasswordSettings} from "@/passwordGenerator";
 
+function GetPasswordDifficulty(score: number) {
+  switch (score){
+    case 1: return 'MINIMAL';
+    case 2: return 'LOW';
+    case 3: return 'NORMAL';
+    case 4: return 'HIGH';
+  }
+  return 'NONE';
+}
+
 export default defineComponent({
   name: 'PasswordGenerator',
   components: {CopiedModal},
   data() {
     return {
       password: 'Y3@fR5$r',
-      passwordLength: 0,
+      passwordLength: 4,
       addUpperLetters: false,
-      addLowerLetters: false,
+      addLowerLetters: true,
       addNumbers: false,
-      addSymbols: false,
+      addSymbols: true,
       copyModal: false,
+      passwordDifficulty: 'NONE',
+      passwordScore: 0,
+      passwordCreated: false,
     }
   },
   methods: {
@@ -129,7 +144,11 @@ export default defineComponent({
       settings.lowercase = this.addLowerLetters;
       settings.numbers = this.addNumbers;
       settings.symbols = this.addSymbols;
-      this.password = generatePassword(settings);
+      const generatedString = generatePassword(settings);
+      this.password = generatedString.password;
+      this.passwordScore = generatedString.score;
+      this.passwordDifficulty = GetPasswordDifficulty(this.passwordScore);
+      this.passwordCreated = true;
     }
   }
 })
@@ -137,7 +156,7 @@ export default defineComponent({
 
 <style scoped>
 #pass-gen-component{
-  @apply flex flex-grow flex-col items-center max-w-[92%];
+  @apply flex flex-grow flex-col items-center max-w-[92%] sm:max-w-[67%] md:max-w-[56%] lg:max-w-[42%] xl:max-w-[28%];
 }
 .generator-section{
   @apply bg-dark-gray-400 rounded p-4 w-full my-2;
@@ -145,8 +164,29 @@ export default defineComponent({
 .generator-item{
   @apply my-2;
 }
+.diff-ind-item{
+  @apply mr-1 last:mr-0;
+}
+.diff-ind-container>.diff-ind-item{
+  @apply rounded;
+}
+.diff-ind-container>.str-indicator-filled:nth-child(1){
+  @apply bg-amber-300;
+}
+.diff-ind-container>.str-indicator-filled:nth-child(2){
+  @apply bg-amber-300;
+}
+.diff-ind-container>.str-indicator-filled:nth-child(3){
+  @apply bg-amber-300;
+}
+.diff-ind-container>.str-indicator-filled:nth-child(4){
+  @apply bg-amber-300;
+}
 .str-indicator{
   @apply w-[12px] h-[28px] border-solid border-2 border-white rounded;
+}
+.str-indicator-filled{
+  @apply w-[12px] h-[28px] border-none  rounded;
 }
 
 
