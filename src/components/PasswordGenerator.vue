@@ -36,7 +36,7 @@
         </div>
         <!-- Password length slider -->
         <div class="slider-container relative">
-          <input class="slider w-full" type="range" v-model="passwordLength" min="4" max="40" step="1">
+          <input class="slider" type="range" v-model="passwordLength" min="4" max="40" step="1">
           <input class="slider-thumb-m" type="range" v-model="passwordLength" min="4" max="40" step="1">
         </div>
         <!-- Password components checkboxes -->
